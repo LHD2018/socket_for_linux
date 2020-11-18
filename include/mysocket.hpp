@@ -44,6 +44,8 @@ public:
     if (tcpRead(sockfd,(char*)&buf_len,4) == false) return false;
 
     buf_len = ntohl(buf_len);  // 把网络字节序转换为主机字节序。
+    if(buf_len > 1024) return false;  // 防止越界
+
     // 读取报文内容
     if (tcpRead(sockfd, buffer, buf_len) == false) return false;
 
