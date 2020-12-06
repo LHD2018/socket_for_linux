@@ -1,11 +1,11 @@
 #ifndef TCPCLIENT_H
 #define TCPCLIENT_H
 
-#include "mysocket.hpp"
+#include "tcp/mytcpsocket.hpp"
 
 // socket客户端类
 
-class TcpClient : public MySocket {
+class TcpClient : public MyTcpSocket {
 public:
   int  m_sockfd;    // 客户端的socket.
   char m_ip[21];    // 服务端的ip地址。

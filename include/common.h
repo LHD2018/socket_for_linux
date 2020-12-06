@@ -14,7 +14,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <list>
 #include <map>
+#include <set>
 #include <algorithm>
 
 

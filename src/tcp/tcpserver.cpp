@@ -1,4 +1,4 @@
-#include "tcpserver.h"
+#include "tcp/tcpserver.h"
 
 TcpServer::TcpServer()
 {
@@ -9,10 +9,7 @@ TcpServer::TcpServer()
 }
 
 bool TcpServer::initServer(const unsigned int port){
-  if (m_listenfd > 0) { 
-    close(m_listenfd); 
-    m_listenfd=-1; 
-  }
+  closeListen();
 
   m_listenfd = socket(AF_INET, SOCK_STREAM, 0);
 

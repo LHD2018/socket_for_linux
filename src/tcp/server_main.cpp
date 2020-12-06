@@ -1,4 +1,4 @@
-#include "tcpserver.h"
+#include "tcp/tcpserver.h"
 
 // 线程函数
 void *pthServer(void *arg);
@@ -15,10 +15,10 @@ TcpServer server;
 int main(int argc, char **argv){
 
     // 关闭全部的信号
-    for (int i=0;i<100;i++) signal(i,SIG_IGN);
+    for (int i=0;i<100;i++) signal(i, SIG_IGN);
     // 设置信号,在shell状态下可用 "kill + 进程号" 正常终止些进程
     // 但请不要用 "kill -9 +进程号" 强行终止
-    signal(SIGINT,mainExit); signal(SIGTERM,mainExit);
+    signal(SIGINT, mainExit); signal(SIGTERM, mainExit);
 
     if(server.initServer(10127) == false){
         cout << "服务端初始化失败！！！" << endl;
@@ -40,11 +40,11 @@ int main(int argc, char **argv){
 
 void *pthServer(void *arg){
 
-    pthread_cleanup_push(pthServerExit,arg);  // 设置线程清理函数。
+    pthread_cleanup_push(pthServerExit, arg);  // 设置线程清理函数。
 
     pthread_detach(pthread_self());  // 分离线程。
 
-    pthread_setcanceltype(PTHREAD_CANCEL_DISABLE,NULL);  // 设置取消方式为立即取消。
+    pthread_setcanceltype(PTHREAD_CANCEL_DISABLE, NULL);  // 设置取消方式为立即取消。
 
     int clientfd = (long) arg;
 
@@ -57,9 +57,9 @@ void *pthServer(void *arg){
         memset(send_buffer, 0, sizeof(send_buffer));
 
         if(server.tcpRecv(clientfd, recv_buffer, 50) == false) break;
-        cout << "接收：" << recv_buffer << endl;
+        cout << "tcp 接收：" << recv_buffer << endl;
 
-        sprintf(send_buffer, "ok");
+        sprintf(send_buffer, "tcp ok");
         if(server.tcpSend(clientfd, send_buffer) == false) break;
 
     }

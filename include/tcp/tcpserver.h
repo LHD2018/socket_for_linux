@@ -1,10 +1,10 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
-#include "mysocket.hpp"
+#include "tcp/mytcpsocket.hpp"
 
 // socket通信的服务端类
-class TcpServer : public MySocket {
+class TcpServer : public MyTcpSocket {
 private:
   int m_sock_len;                    // 结构体struct sockaddr_in的大小。
   struct sockaddr_in m_serveraddr;    // 服务端的地址信息。

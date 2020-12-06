@@ -1,9 +1,9 @@
-#ifndef MYSOCKET_HPP
-#define MYSOCKET_HPP
+#ifndef MYTCPSOCKET_HPP
+#define MYTCPSOCKET_HPP
 
 #include "common.h"
 
-class MySocket{
+class MyTcpSocket{
 protected:
   bool m_istimeout;
 
@@ -33,7 +33,9 @@ public:
 
       int ret;
       if ( (ret = select(sockfd+1, &tmpfd, 0, 0, &timeout)) <= 0 ){
-        if (ret==0) m_istimeout = true;
+        if (ret==0) {
+          m_istimeout = true;
+        }
         return false;
       }
     }
