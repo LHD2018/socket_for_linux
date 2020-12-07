@@ -6,7 +6,7 @@
 // socket通信的服务端类
 class TcpServer : public MyTcpSocket {
 private:
-  int m_sock_len;                    // 结构体struct sockaddr_in的大小。
+  int m_addr_len;                    // 结构体struct sockaddr_in的大小。
   struct sockaddr_in m_serveraddr;    // 服务端的地址信息。
 public:
   map<int, struct sockaddr_in> m_clientaddrs;  // 客户端的地址信息。

@@ -3,7 +3,7 @@
 
 UdpServer::UdpServer(){
     m_sockfd = -1;
-    m_sock_len = 0;
+    m_addr_len = 0;
 }
 
 bool UdpServer::initServer(const unsigned int port){
@@ -20,7 +20,7 @@ bool UdpServer::initServer(const unsigned int port){
         udpClose();
         return false;
     }
-    m_sock_len = sizeof(struct sockaddr_in);
+    m_addr_len = sizeof(struct sockaddr_in);
     return true;
 }
 
@@ -46,7 +46,7 @@ bool UdpServer::udpRecv(char *buffer, const int s_timeout){
     }
 
     memset(&m_clientaddr, 0, sizeof(m_clientaddr));
-    if(recvfrom(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_clientaddr, (socklen_t *)&m_sock_len) == -1){
+    if(recvfrom(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_clientaddr, (socklen_t *)&m_addr_len) == -1){
         return false;
     }
     bool isin = false;
@@ -78,7 +78,7 @@ bool UdpServer::udpSend(const char *buffer){
 
     if(select(m_sockfd + 1, 0, &tmpfd, 0, &timeout) <= 0) return false;
 
-    if(sendto(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_clientaddr, m_sock_len) == -1){
+    if(sendto(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_clientaddr, m_addr_len) == -1){
         return false;
     }
     return true;

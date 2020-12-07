@@ -3,7 +3,7 @@
 
 UdpClient::UdpClient(){
     m_sockfd = -1;
-    m_sock_len = 0;
+    m_addr_len = 0;
 }
 
 void UdpClient::initClient(const char * server_ip, const int server_port){
@@ -15,7 +15,7 @@ void UdpClient::initClient(const char * server_ip, const int server_port){
     m_serveraddr.sin_addr.s_addr = inet_addr(server_ip);
     m_serveraddr.sin_port = htons(server_port);
 
-    m_sock_len = sizeof(struct sockaddr_in);
+    m_addr_len = sizeof(struct sockaddr_in);
 }
 
 bool UdpClient::udpRecv(char *buffer){
@@ -34,7 +34,7 @@ bool UdpClient::udpRecv(char *buffer){
     if(select(m_sockfd + 1, &tmpfd, 0, 0, &timeout) <= 0) return false;
     
 
-    if(recvfrom(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_serveraddr, (socklen_t *)&m_sock_len) == -1){
+    if(recvfrom(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_serveraddr, (socklen_t *)&m_addr_len) == -1){
         return false;
     }
     return true;
@@ -54,7 +54,7 @@ bool UdpClient::udpSend(const char *buffer){
     timeout.tv_usec = 0;
 
     if(select(m_sockfd + 1, 0, &tmpfd, 0, &timeout) <= 0) return false;
-    if(sendto(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_serveraddr, m_sock_len) == -1){
+    if(sendto(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&m_serveraddr, m_addr_len) == -1){
         return false;
     }
     return true;
