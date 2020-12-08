@@ -56,7 +56,7 @@ void *pthServer(void *arg){
         memset(recv_buffer, 0, sizeof(recv_buffer));
         memset(send_buffer, 0, sizeof(send_buffer));
 
-        if(server.tcpRecv(clientfd, recv_buffer, 50) == false) break;
+        if(server.tcpRecv(clientfd, recv_buffer, NULL, 50) == false) break;
         cout << "tcp 接收：" << recv_buffer << endl;
 
         sprintf(send_buffer, "tcp ok");

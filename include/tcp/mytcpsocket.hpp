@@ -12,9 +12,10 @@ public:
   // 接收socket的对端发送过来的数据。
   // sockfd：可用的socket连接。
   // buffer：接收数据缓冲区的地址。
+  // buf_len 传入buffe长度地址，如果不需要填NULL
   // s_timeout：接收等待超时的时间，单位：秒，缺省值是0-无限等待。
   // 返回值：true-成功；false-失败，失败有两种情况：1）等待超时；2）socket连接已不可用。
-  bool tcpRecv(const int sockfd, char *buffer, const int s_timeout=0){
+  bool tcpRecv(const int sockfd, char *buffer, int *buf_len, const int s_timeout=0){
     if (sockfd == -1) return false;
 
     if (s_timeout > 0){
@@ -39,17 +40,20 @@ public:
         return false;
       }
     }
-
-    int buf_len = 0;
+    int t_buf_len = 0;
+    if(buf_len == NULL){
+      buf_len = &t_buf_len;
+    }
+    
 
     // 读取报头（报文内容大小）
-    if (tcpRead(sockfd,(char*)&buf_len,4) == false) return false;
+    if (tcpRead(sockfd,(char*)buf_len,4) == false) return false;
 
-    buf_len = ntohl(buf_len);  // 把网络字节序转换为主机字节序。
-    if(buf_len > 1024) return false;  // 防止越界
+    (*buf_len) = ntohl(*buf_len);  // 把网络字节序转换为主机字节序。
+    if((*buf_len) > 1024) return false;  // 防止越界
 
     // 读取报文内容
-    if (tcpRead(sockfd, buffer, buf_len) == false) return false;
+    if (tcpRead(sockfd, buffer, *buf_len) == false) return false;
 
     return true;
   }

@@ -16,7 +16,7 @@ int main(int argc, char **argv){
         if(client.tcpSend(client.m_sockfd, str_buffer) == false) break;
 
         memset(str_buffer, 0, sizeof(str_buffer));
-        if(client.tcpRecv(client.m_sockfd, str_buffer, 10) == false) break;
+        if(client.tcpRecv(client.m_sockfd, str_buffer, NULL, 10) == false) break;
         cout << "接收：" << str_buffer << endl;
         sleep(1);
     }

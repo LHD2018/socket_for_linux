@@ -10,6 +10,7 @@ public:
   int  m_sockfd;    // 客户端的socket.
   char m_ip[21];    // 服务端的ip地址。
   int  m_port;      // 与服务端通信的端口。
+  
   TcpClient();  // 构造函数。
 
   // 向服务端发起连接请求。

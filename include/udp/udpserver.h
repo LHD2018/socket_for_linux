@@ -1,19 +1,13 @@
 #ifndef UDPSERVER_H
 #define UDPSERVER_H
 
-#include "common.h"
+#include "udp/myudpsocket.hpp"
 
-class UdpServer{
-private:
-    socklen_t m_addr_len;   // 结构体struct sockaddr_in的大小
-    sockaddr_in m_server_addr;  // 服务端sockaddr
+class UdpServer : public MyUdpSocket{
 
 public:
-    int m_sockfd;   // 服务端socket
     sockaddr_in m_clientaddr;   // 已连接的客户端
     list<sockaddr_in> m_clientaddrs;    // 已连接的所有客户端
-
-    UdpServer();
 
     // 初始化服务端
     bool initServer(const unsigned int port);
@@ -27,10 +21,6 @@ public:
     // 服务端发送
     bool udpSend(const char *buffer);
 
-    // 关闭socket
-    void udpClose();
-
-    ~UdpServer();
 };
 
 #endif
