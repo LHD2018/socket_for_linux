@@ -13,9 +13,9 @@ void UdpClient::initClient(const char * server_ip, const int server_port){
     m_addr_len = sizeof(struct sockaddr_in);
 }
 
-bool UdpClient::udpRecv(char *buffer, const int s_timeout){
+bool UdpClient::udpRecv(char *buffer,int buff_len, const int s_timeout){
     
-    return udpRead(buffer, &m_serveraddr, s_timeout);
+    return udpRead(buffer, buff_len, &m_serveraddr, s_timeout);
 }
 
 bool UdpClient::udpSend(const char *buffer){

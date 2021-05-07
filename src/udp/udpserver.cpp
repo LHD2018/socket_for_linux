@@ -22,8 +22,8 @@ char *UdpServer::getClientIP(struct sockaddr_in clientaddr){
   return(inet_ntoa(clientaddr.sin_addr));
 }
 
-bool UdpServer::udpRecv(char *buffer, const int s_timeout){
-    if(udpRead(buffer, &m_clientaddr, s_timeout) == false) return false;
+bool UdpServer::udpRecv(char *buffer, int buff_len,const int s_timeout){
+    if(udpRead(buffer, buff_len, &m_clientaddr, s_timeout) == false) return false;
     bool isin = false;
     for(list<sockaddr_in>::iterator it = m_clientaddrs.begin();it != m_clientaddrs.end(); it++){
         

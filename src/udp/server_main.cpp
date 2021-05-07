@@ -40,7 +40,7 @@ int main(int argc, char **argv){
     memset(buffer, 0, sizeof(buffer));
 
     while(true){
-        if(main_server.udpRecv(buffer) == false) {
+        if(main_server.udpRecv(buffer, sizeof(buffer)) == false) {
             continue;
         }
         pthread_mutex_lock(&mutex);

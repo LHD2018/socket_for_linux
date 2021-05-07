@@ -20,7 +20,7 @@ int main(int argc, char **argv){
                 break;
             }
             memset(buffer, 0, sizeof(buffer));
-            if(client.udpRecv(buffer, 1) == false){
+            if(client.udpRecv(buffer, sizeof(buffer), 1) == false){
                lost_count++;
                 if(lost_count < 5){
                     continue;

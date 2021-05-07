@@ -16,7 +16,7 @@ public:
     char *getClientIP(struct sockaddr_in clientaddr);
 
     // 服务端接收（s_timeout 超时机制，0为无限等待）
-    bool udpRecv(char *buffer, const int s_timeout=0);
+    bool udpRecv(char *buffer,int buff_len, const int s_timeout=0);
 
     // 服务端发送
     bool udpSend(const char *buffer);

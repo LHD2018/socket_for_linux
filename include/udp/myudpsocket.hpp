@@ -17,9 +17,10 @@ public:
 
     // UDP通用接收函数
     // buffer:储存接收到的数据
+    // buff_len :接收数据长度
     // from_addr:存放数据来源的地址
     // s_timeout: 等待超时，0为无限等待
-    bool udpRead(char *buffer, struct sockaddr_in *from_addr, const int s_timeout=0){
+    bool udpRead(char *buffer, int buff_len, struct sockaddr_in *from_addr, const int s_timeout=0){
         if (m_sockfd == -1) return false;
         if (s_timeout > 0){
             // 定义文件描述符集合
@@ -37,7 +38,7 @@ public:
         }
 
         memset(from_addr, 0, sizeof(*from_addr));
-        if(recvfrom(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)from_addr, (socklen_t *)&m_addr_len) == -1){
+        if(recvfrom(m_sockfd, buffer, buff_len, 0, (struct sockaddr *)from_addr, (socklen_t *)&m_addr_len) == -1){
             return false;
         }
         return true;
@@ -61,7 +62,7 @@ public:
 
         if(select(m_sockfd + 1, 0, &tmpfd, 0, &timeout) <= 0) return false;
 
-        if(sendto(m_sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)to_addr, m_addr_len) == -1){
+        if(sendto(m_sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)to_addr, m_addr_len) == -1){
             return false;
         }
         return true;
